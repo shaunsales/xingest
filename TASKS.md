@@ -27,10 +27,10 @@
 - [x] `cache/sqlite_cache.py` - SQLite implementation (async, TTL support)
 - [x] `proxy/rotating.py` - Proxy rotation (round-robin/random)
 
-## Phase 5: Orchestration
-- [ ] `core/orchestrator.py` - Pipeline coordinator
-- [ ] `core/exporter.py` - JSON output
-- [ ] `__init__.py` - Public API
+## Phase 5: Orchestration ✅
+- [x] `core/orchestrator.py` - Pipeline coordinator (Scraper class with caching)
+- [x] `core/exporter.py` - JSON output (save/load/merge utilities)
+- [x] `__init__.py` - Public API (Scraper, config, models, exporters)
 
 ## Phase 6: CLI & Polish
 - [ ] `cli.py` - Typer CLI
