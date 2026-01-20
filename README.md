@@ -7,8 +7,11 @@ A Python library for scraping X/Twitter profile data using Playwright and Beauti
 - **Profile extraction**: Username, display name, bio, followers/following counts, verification status
 - **Tweet extraction**: Text, timestamps, engagement metrics (likes, reposts, replies, views)
 - **Pinned tweet detection**: Automatically identifies pinned tweets
-- **Caching**: SQLite-based caching with configurable TTL
+- **Chronological ordering**: Tweets sorted newest-first (pinned tweets at top)
+- **Caching**: SQLite or Redis caching with configurable TTL
 - **Proxy support**: Round-robin or random proxy rotation
+- **DataFrame export**: Convert results to pandas DataFrames or CSV
+- **REST API**: Docker image with FastAPI + Swagger UI
 - **Async-first**: Built on async/await for efficient concurrent scraping
 
 ## Installation
@@ -27,28 +30,55 @@ playwright install chromium
 
 ## Quick Start
 
+### Option 1: Docker (Recommended)
+
+Get started in seconds with the pre-built Docker image:
+
+```bash
+# Clone and build
+git clone https://github.com/shaunsales/xingest.git
+cd xingest
+docker build -t xingest .
+
+# Run the API server
+docker run -p 8000:8000 xingest
+
+# Open Swagger UI
+open http://localhost:8000/docs
+```
+
+Then scrape via the REST API:
+```bash
+curl "http://localhost:8000/api/scrape/elonmusk"
+```
+
+### Option 2: Python Library
+
 ```python
 import asyncio
-from xingest.core.fetcher import fetch_profile_page
-from xingest.core.parser import parse_page
-from xingest.core.transformer import transform_result
+from xingest import Scraper
 
-async def scrape_profile(username: str):
-    # Fetch HTML
-    result = await fetch_profile_page(username, headless=True)
-    if not result.success:
-        print(f"Error: {result.error}")
-        return None
-    
-    # Parse and transform
-    parsed = parse_page(result.html, username)
-    return transform_result(parsed, username)
+async def main():
+    async with Scraper() as scraper:
+        result = await scraper.scrape("elonmusk")
+        print(f"Followers: {result.profile.followers_count:,}")
+        for tweet in result.tweets[:3]:
+            print(f"- {tweet.text[:50]}...")
 
-# Run
-result = asyncio.run(scrape_profile("elonmusk"))
-print(f"Followers: {result.profile.followers_count:,}")
-for tweet in result.tweets[:3]:
-    print(f"- {tweet.text[:50]}... ({tweet.like_count:,} likes)")
+asyncio.run(main())
+```
+
+### Option 3: CLI
+
+```bash
+# Scrape a profile
+xingest scrape elonmusk
+
+# Save to JSON
+xingest scrape elonmusk -o elonmusk.json
+
+# Batch scrape
+xingest scrape elonmusk jack cz_binance
 ```
 
 ## Configuration
@@ -95,14 +125,67 @@ TweetData(
 )
 ```
 
+## DataFrame Export
+
+Export results to pandas DataFrames for analysis:
+
+```python
+from xingest import Scraper, to_tweets_df, to_profile_df, save_csv
+
+async with Scraper() as scraper:
+    result = await scraper.scrape("elonmusk")
+    
+    # Convert to DataFrames
+    tweets_df = to_tweets_df(result)
+    profile_df = to_profile_df(result)
+    
+    # Save to CSV
+    save_csv(result, "tweets.csv", tweets=True)
+    save_csv(result, "profile.csv", tweets=False)
+```
+
+Install pandas support:
+```bash
+pip install xingest[pandas]
+```
+
+## REST API
+
+The Docker image includes a FastAPI server with Swagger UI documentation.
+
+### Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health` | Health check |
+| `GET` | `/api/scrape/{username}` | Quick scrape with query params |
+| `POST` | `/api/scrape` | Scrape with full config options |
+| `POST` | `/api/scrape/batch` | Batch scrape (up to 10 users) |
+| `GET` | `/api/config` | View default configuration |
+
+### Example POST Request
+
+```bash
+curl -X POST "http://localhost:8000/api/scrape" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "elonmusk",
+    "options": {
+      "force_refresh": false,
+      "timeout_ms": 60000,
+      "cache_enabled": true
+    }
+  }'
+```
+
 ## Testing
 
 ```bash
-# Run unit tests (no internet required, uses cached fixtures)
-pytest tests/test_parser.py tests/test_config.py tests/test_cache.py tests/test_proxy.py -v
+# Run all unit tests (114 tests, no internet required)
+pytest tests/ --ignore=tests/test_integration_scrape.py -v
 
 # Run integration tests (requires internet, scrapes live data)
-python tests/test_integration_scrape.py
+pytest tests/test_integration_scrape.py -v
 ```
 
 ## Project Structure
@@ -110,16 +193,26 @@ python tests/test_integration_scrape.py
 ```
 xingest/
 ├── xingest/
-│   ├── core/           # Fetcher, parser, transformer
+│   ├── core/           # Fetcher, parser, transformer, orchestrator, exporter
 │   ├── models/         # Pydantic data models
-│   ├── cache/          # Cache implementations
+│   ├── cache/          # SQLite and Redis cache implementations
 │   ├── proxy/          # Proxy rotation
 │   ├── logging/        # Structlog configuration
+│   ├── api.py          # FastAPI REST server
+│   ├── cli.py          # Typer CLI
 │   └── config.py       # Pydantic Settings
 ├── tests/
 │   ├── fixtures/       # Cached HTML/JSON for tests
-│   └── test_*.py       # Unit tests
-└── scripts/            # Utility scripts
+│   └── test_*.py       # Unit tests (114 tests)
+├── Dockerfile          # Docker build
+└── docker-compose.yml  # Docker Compose config
+```
+
+## Optional Dependencies
+
+```bash
+pip install xingest[pandas]  # DataFrame/CSV export
+pip install xingest[api]     # FastAPI server (included in Docker)
 ```
 
 ## License
