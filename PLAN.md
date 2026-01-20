@@ -1,4 +1,4 @@
-# PLAN.md — X/Twitter Profile & Tweet Scraper
+# PLAN.md - X/Twitter Profile & Tweet Scraper
 
 ## Overview
 
@@ -601,7 +601,7 @@ xingest scrape elonmusk --no-cache
 xingest scrape elonmusk --compact
 ```
 
-### __init__.py — Public API
+### __init__.py - Public API
 
 ```python
 from xingest.core.orchestrator import Orchestrator
