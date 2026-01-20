@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from xingest import Scraper, ScraperConfig, __version__
-from xingest.config import CacheBackend
+from xingest.config import CacheBackend, ProxyMode
 from xingest.core.exporter import to_dict
 
 
@@ -69,6 +69,69 @@ class HealthResponse(BaseModel):
     status: str
     version: str
     timestamp: str
+
+
+class ConfigResponse(BaseModel):
+    """Current scraper configuration with detailed descriptions."""
+    
+    headless: bool = Field(
+        ...,
+        description="Run browser in headless mode (no visible window). "
+        "Set to false for debugging to see browser actions.",
+        json_schema_extra={"example": True},
+    )
+    browser_timeout_ms: int = Field(
+        ...,
+        description="Maximum time in milliseconds to wait for page load and elements. "
+        "Increase for slow connections. Range: 5000-120000ms.",
+        json_schema_extra={"example": 30000},
+    )
+    cache_backend: str = Field(
+        ...,
+        description="Storage backend for caching scrape results. "
+        "Options: 'sqlite' (local file), 'redis' (remote server), 'none' (disabled).",
+        json_schema_extra={"example": "sqlite", "enum": ["sqlite", "redis", "none"]},
+    )
+    cache_ttl_seconds: int = Field(
+        ...,
+        description="Time-to-live for cached results in seconds. "
+        "After this duration, cached data is considered stale and will be refreshed. "
+        "Range: 0 (no caching) to 86400 (24 hours).",
+        json_schema_extra={"example": 300},
+    )
+    proxy_mode: str = Field(
+        ...,
+        description="Proxy selection strategy when multiple proxies are configured. "
+        "Options: 'round_robin' (cycle through proxies), 'random' (random selection), 'none' (direct connection).",
+        json_schema_extra={"example": "none", "enum": ["round_robin", "random", "none"]},
+    )
+    max_concurrency: int = Field(
+        ...,
+        description="Maximum number of concurrent browser instances for batch scraping. "
+        "Higher values = faster but more resource intensive. Range: 1-10.",
+        json_schema_extra={"example": 5},
+    )
+    request_delay_ms: int = Field(
+        ...,
+        description="Delay in milliseconds between sequential requests. "
+        "Helps avoid rate limiting. Range: 0-10000ms.",
+        json_schema_extra={"example": 1000},
+    )
+    retry_enabled: bool = Field(
+        ...,
+        description="Enable automatic retry on transient failures (timeouts, network errors).",
+        json_schema_extra={"example": True},
+    )
+    max_retries: int = Field(
+        ...,
+        description="Maximum number of retry attempts before giving up. Range: 0-10.",
+        json_schema_extra={"example": 3},
+    )
+    log_level: str = Field(
+        ...,
+        description="Logging verbosity level. Options: 'DEBUG', 'INFO', 'WARNING', 'ERROR'.",
+        json_schema_extra={"example": "INFO", "enum": ["DEBUG", "INFO", "WARNING", "ERROR"]},
+    )
 
 
 # Global scraper instance
@@ -192,19 +255,39 @@ async def scrape_batch(request: BatchScrapeRequest):
     }
 
 
-@app.get("/api/config", tags=["System"])
+@app.get(
+    "/api/config",
+    response_model=ConfigResponse,
+    tags=["System"],
+    summary="Get default configuration",
+    description="Returns the default scraper configuration with detailed explanations of each option. "
+    "Use these values as reference when configuring scrape requests.",
+)
 async def get_default_config():
-    """Get default scraper configuration."""
+    """
+    Get default scraper configuration.
+    
+    This endpoint returns all configurable options with their default values.
+    Use this as a reference when customizing scrape requests via POST /api/scrape.
+    
+    **Configuration can also be set via environment variables** with the `XINGEST_` prefix:
+    - `XINGEST_HEADLESS=false`
+    - `XINGEST_CACHE_BACKEND=redis`
+    - `XINGEST_CACHE_TTL_SECONDS=600`
+    """
     config = ScraperConfig()
-    return {
-        "headless": config.headless,
-        "browser_timeout_ms": config.browser_timeout_ms,
-        "cache_backend": config.cache_backend.value,
-        "cache_ttl_seconds": config.cache_ttl_seconds,
-        "proxy_mode": config.proxy_mode.value,
-        "max_concurrency": config.max_concurrency,
-        "request_delay_ms": config.request_delay_ms,
-    }
+    return ConfigResponse(
+        headless=config.headless,
+        browser_timeout_ms=config.browser_timeout_ms,
+        cache_backend=config.cache_backend.value,
+        cache_ttl_seconds=config.cache_ttl_seconds,
+        proxy_mode=config.proxy_mode.value,
+        max_concurrency=config.max_concurrency,
+        request_delay_ms=config.request_delay_ms,
+        retry_enabled=config.retry_enabled,
+        max_retries=config.max_retries,
+        log_level=config.log_level,
+    )
 
 
 if __name__ == "__main__":
