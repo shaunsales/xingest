@@ -81,16 +81,25 @@ def parse_tweet_date(date_str: str | None) -> datetime | None:
     Parse tweet date/time strings.
 
     X/Twitter uses various formats:
+        - ISO 8601: "2026-01-18T18:17:20.000Z"
         - "2h" (relative)
         - "Mar 15" (same year)
         - "Jan 5, 2024" (different year)
-        - ISO format timestamps
     """
     if not date_str:
         return None
 
     date_str = date_str.strip()
     now = datetime.now()
+
+    # ISO 8601 format (from <time datetime="..."> element)
+    if "T" in date_str and (date_str.endswith("Z") or "+" in date_str):
+        try:
+            # Handle "2026-01-18T18:17:20.000Z" format
+            clean = date_str.replace("Z", "+00:00")
+            return datetime.fromisoformat(clean)
+        except ValueError:
+            pass
 
     # Relative time patterns
     relative_patterns = [

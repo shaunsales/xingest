@@ -11,17 +11,17 @@
     "following_count": 5894,
     "total_posts_count": 0,
     "is_verified": true,
-    "scraped_at": "2026-01-20T13:41:37.388558"
+    "scraped_at": "2026-01-20T13:51:03.140068"
   },
   "tweets": [
     {
       "tweet_id": "2013402546614702147",
       "text": "Looking to build out podcast team, since we're growing so fast and having a BLAST! \n\nif you love tech, startups and founders (and you listen to TWIST and All In), please send me an email about how you can help with video editing, community and producing.\n\npick the email that",
-      "created_at": null,
-      "is_pinned": false,
+      "created_at": "2026-01-20T00:05:48Z",
+      "is_pinned": true,
       "reply_count": 3,
       "repost_count": 25,
-      "like_count": 213,
+      "like_count": 217,
       "view_count": 52000,
       "media_urls": null,
       "tweet_url": "https://x.com/Jason/status/2013402546614702147"
@@ -29,7 +29,7 @@
     {
       "tweet_id": "1629742501291778048",
       "text": "BASED SNL",
-      "created_at": null,
+      "created_at": "2023-02-26T07:17:46Z",
       "is_pinned": false,
       "reply_count": 1768,
       "repost_count": 10664,
@@ -41,7 +41,7 @@
     {
       "tweet_id": "1304081099153313793",
       "text": "Brilliant: drone footage of San Francisco yesterday to blade runner 2049 sound track",
-      "created_at": null,
+      "created_at": "2020-09-10T15:35:37Z",
       "is_pinned": false,
       "reply_count": 706,
       "repost_count": 15430,
@@ -53,7 +53,7 @@
     {
       "tweet_id": "1594832094416470021",
       "text": "When is the last time you heard from Zuckerberg about how he is running fb & instagram? \n\nWhen is the last time you heard from the CEO of TikTok about how they are using our data? \n\nWho even is the ceo of TikTok?! \n\nHow accessible are these leaders?",
-      "created_at": null,
+      "created_at": "2022-11-21T23:16:16Z",
       "is_pinned": false,
       "reply_count": 1851,
       "repost_count": 3764,
@@ -65,11 +65,11 @@
     {
       "tweet_id": "1877924213186576475",
       "text": "",
-      "created_at": null,
+      "created_at": "2025-01-11T03:43:17Z",
       "is_pinned": false,
       "reply_count": 1483,
       "repost_count": 3079,
-      "like_count": 48654,
+      "like_count": 48655,
       "view_count": 3700000,
       "media_urls": [
         "https://pbs.twimg.com/media/Gg-6HUfXcAAJoEm?format=jpg&name=small"
@@ -79,7 +79,7 @@
     {
       "tweet_id": "1614836142242955264",
       "text": "Looks like the AI has gone full kobayashi maru already",
-      "created_at": null,
+      "created_at": "2023-01-16T04:05:13Z",
       "is_pinned": false,
       "reply_count": 882,
       "repost_count": 6157,
@@ -91,7 +91,7 @@
     {
       "tweet_id": "1814134821603754307",
       "text": "Trump is flipping every moderate I know… and many life-long democrats, by speaking to all Americans in a way that the democrats have forgotten how to do.  \n\nThere are a lot of lessons here for@TheDemocrats, from having a positive message to building a big, non-judgmental tent —",
-      "created_at": null,
+      "created_at": "2024-07-19T03:07:01Z",
       "is_pinned": false,
       "reply_count": 3197,
       "repost_count": 6205,
@@ -103,7 +103,7 @@
     {
       "tweet_id": "1813315242656694709",
       "text": "",
-      "created_at": null,
+      "created_at": "2024-07-16T20:50:18Z",
       "is_pinned": false,
       "reply_count": 442,
       "repost_count": 2523,
@@ -118,6 +118,6 @@
   "cached": false,
   "cache_age_seconds": null,
   "error_message": null,
-  "scraped_at": "2026-01-20T13:41:37.388698",
-  "duration_ms": 5541.974
+  "scraped_at": "2026-01-20T13:51:03.140231",
+  "duration_ms": 5951.808
 }

@@ -98,6 +98,34 @@ def parse_profile(soup: BeautifulSoup) -> dict:
     return profile
 
 
+def _find_pinned_tweet_id(soup: BeautifulSoup) -> str | None:
+    """Find the tweet ID of the pinned tweet, if any."""
+    # Find elements containing exactly "Pinned" text
+    pinned_elements = soup.find_all(string=lambda t: t and t.strip() == "Pinned")
+    
+    for pinned_text in pinned_elements:
+        # Walk up to find the containing element that also has a tweet
+        parent = pinned_text.parent
+        for _ in range(20):
+            if parent is None:
+                break
+            # Look for a tweet within this container
+            tweet_el = parent.find(attrs={"data-testid": "tweet"})
+            if tweet_el:
+                # Extract tweet ID
+                links = tweet_el.select('a[href*="/status/"]')
+                for link in links:
+                    href = link.get("href", "")
+                    if "/status/" in href:
+                        tweet_id = href.split("/status/")[1].split("/")[0].split("?")[0]
+                        if tweet_id.isdigit():
+                            return tweet_id
+                break
+            parent = parent.parent
+    
+    return None
+
+
 def parse_tweets(soup: BeautifulSoup, username: str | None = None) -> list[dict]:
     """
     Extract tweet data from parsed HTML.
@@ -109,21 +137,14 @@ def parse_tweets(soup: BeautifulSoup, username: str | None = None) -> list[dict]
     Returns:
         List of dicts with raw tweet data (not yet validated)
     """
+    # First, find the pinned tweet ID (if any)
+    pinned_tweet_id = _find_pinned_tweet_id(soup)
+    
     tweets = []
     tweet_elements = soup.select(SELECTORS["tweet"])
 
     for i, tweet_el in enumerate(tweet_elements):
         tweet = {}
-
-        # Check if pinned (first tweet with pinned indicator)
-        tweet["is_pinned"] = False
-        if i == 0:
-            # Look for "Pinned" text in social context above tweet
-            parent = tweet_el.parent
-            if parent:
-                social_context = parent.find_previous_sibling()
-                if social_context and "Pinned" in social_context.get_text():
-                    tweet["is_pinned"] = True
 
         # Tweet text
         text_el = tweet_el.select_one(SELECTORS["tweet_text"])
@@ -143,6 +164,8 @@ def parse_tweets(soup: BeautifulSoup, username: str | None = None) -> list[dict]
                     if tweet_id.isdigit():
                         tweet["tweet_id"] = tweet_id
                         tweet["tweet_url"] = f"https://x.com{href.split('?')[0]}"
+                        # Check if this is the pinned tweet
+                        tweet["is_pinned"] = (tweet_id == pinned_tweet_id)
                         break
 
         # Engagement metrics
@@ -165,6 +188,11 @@ def parse_tweets(soup: BeautifulSoup, username: str | None = None) -> list[dict]
         views_el = tweet_el.select_one(SELECTORS["views"])
         if views_el:
             tweet["view_count_raw"] = views_el.get_text(strip=True)
+
+        # Tweet timestamp - extract from <time datetime="..."> element
+        time_el = tweet_el.select_one("time[datetime]")
+        if time_el:
+            tweet["created_at_raw"] = time_el.get("datetime")
 
         # Media URLs
         media_urls = []

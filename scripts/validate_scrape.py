@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import sys
 from pathlib import Path
 from datetime import datetime
 
@@ -9,19 +10,60 @@ from xingest.core.fetcher import fetch_profile_page
 from xingest.core.parser import parse_page
 from xingest.core.transformer import transform_result
 
-# Test accounts
-USERNAMES = [
-    "okx",
-    "nodepay", 
-    "jason",
-    "cz_binance",
-    "nikitabier",
-]
+# Test accounts - dict with username and expected pinned tweet ID (if known)
+TEST_ACCOUNTS = {
+    "okx": {"pinned_tweet_id": "2012952460877607151"},  # "Five straight wins" tweet
+    "nodepay": {"pinned_tweet_id": None},
+    "jason": {"pinned_tweet_id": None},
+    "cz_binance": {"pinned_tweet_id": None},
+    "nikitabier": {"pinned_tweet_id": None},
+}
 
 FIXTURES_DIR = Path(__file__).parent.parent / "tests" / "fixtures"
 
 
-async def validate_account(username: str, save_fixture: bool = True) -> dict:
+class ValidationError(Exception):
+    """Raised when validation checks fail."""
+    pass
+
+
+def validate_tweet_data(tweets: list, expected_pinned_id: str | None, username: str) -> list[str]:
+    """
+    Validate tweet data meets requirements.
+    
+    Returns list of validation errors (empty if all pass).
+    """
+    errors = []
+    
+    if not tweets:
+        errors.append("No tweets extracted")
+        return errors
+    
+    # Check all tweets have created_at timestamp
+    tweets_missing_timestamp = []
+    for t in tweets:
+        if t.created_at is None:
+            tweets_missing_timestamp.append(t.tweet_id)
+    
+    if tweets_missing_timestamp:
+        errors.append(f"CRITICAL: {len(tweets_missing_timestamp)} tweets missing created_at: {tweets_missing_timestamp[:3]}...")
+    
+    # Check pinned tweet detection
+    pinned_tweets = [t for t in tweets if t.is_pinned]
+    
+    if expected_pinned_id:
+        if not pinned_tweets:
+            errors.append(f"CRITICAL: Expected pinned tweet {expected_pinned_id} but none detected")
+        elif pinned_tweets[0].tweet_id != expected_pinned_id:
+            errors.append(f"CRITICAL: Expected pinned tweet {expected_pinned_id} but got {pinned_tweets[0].tweet_id}")
+    
+    if len(pinned_tweets) > 1:
+        errors.append(f"WARNING: Multiple pinned tweets detected: {[t.tweet_id for t in pinned_tweets]}")
+    
+    return errors
+
+
+async def validate_account(username: str, expected: dict, save_fixture: bool = True) -> dict:
     """Scrape and validate a single account."""
     print(f"\n{'='*60}")
     print(f"Scraping @{username}...")
@@ -77,6 +119,7 @@ async def validate_account(username: str, save_fixture: bool = True) -> dict:
     for i, t in enumerate(scrape_result.tweets[:3]):  # Show first 3
         print(f"  [{i+1}] ID: {t.tweet_id}")
         print(f"      Text: {t.text[:60] + '...' if len(t.text) > 60 else t.text}")
+        print(f"      Created: {t.created_at}")
         print(f"      Likes: {t.like_count:,} | Reposts: {t.repost_count:,} | Replies: {t.reply_count:,}")
         print(f"      Pinned: {t.is_pinned}")
     
@@ -91,6 +134,20 @@ async def validate_account(username: str, save_fixture: bool = True) -> dict:
         print(f"\n--- Parse Errors ---")
         for err in parse_result.parse_errors:
             print(f"  ⚠️  {err}")
+    
+    # Run validation checks
+    validation_errors = validate_tweet_data(
+        scrape_result.tweets,
+        expected.get("pinned_tweet_id"),
+        username
+    )
+    
+    if validation_errors:
+        print(f"\n--- ❌ VALIDATION ERRORS ---")
+        for err in validation_errors:
+            print(f"  {err}")
+    else:
+        print(f"\n--- ✓ All validation checks passed ---")
     
     # Save JSON result
     if save_fixture:
@@ -107,6 +164,7 @@ async def validate_account(username: str, save_fixture: bool = True) -> dict:
         "profile_extracted": scrape_result.profile is not None,
         "tweets_count": len(scrape_result.tweets),
         "duration_ms": duration_ms,
+        "validation_errors": validation_errors,
     }
 
 
@@ -115,11 +173,12 @@ async def main():
     print("=" * 60)
     print("PHASE 3: Live Validation")
     print("=" * 60)
-    print(f"Testing {len(USERNAMES)} accounts: {', '.join('@' + u for u in USERNAMES)}")
+    usernames = list(TEST_ACCOUNTS.keys())
+    print(f"Testing {len(usernames)} accounts: {', '.join('@' + u for u in usernames)}")
     
     results = []
-    for username in USERNAMES:
-        result = await validate_account(username)
+    for username, expected in TEST_ACCOUNTS.items():
+        result = await validate_account(username, expected)
         results.append(result)
         # Small delay between requests
         await asyncio.sleep(2)
@@ -130,17 +189,37 @@ async def main():
     print("=" * 60)
     
     success_count = sum(1 for r in results if r.get("success"))
-    print(f"\nSuccess: {success_count}/{len(results)}")
+    validation_pass_count = sum(1 for r in results if not r.get("validation_errors"))
     
-    print("\n| Username | Profile | Tweets | Duration |")
-    print("|----------|---------|--------|----------|")
+    print(f"\nScrape Success: {success_count}/{len(results)}")
+    print(f"Validation Pass: {validation_pass_count}/{len(results)}")
+    
+    print("\n| Username    | Profile | Tweets | Validation | Duration |")
+    print("|-------------|---------|--------|------------|----------|")
     for r in results:
         profile = "✓" if r.get("profile_extracted") else "❌"
         tweets = r.get("tweets_count", 0)
+        val_status = "✓" if not r.get("validation_errors") else "❌"
         duration = f"{r.get('duration_ms', 0):.0f}ms"
-        print(f"| @{r['username']:<8} | {profile:<7} | {tweets:<6} | {duration:<8} |")
+        print(f"| @{r['username']:<10} | {profile:<7} | {tweets:<6} | {val_status:<10} | {duration:<8} |")
     
-    print("\nFixtures saved to: tests/fixtures/")
+    # Report all validation errors
+    all_errors = []
+    for r in results:
+        for err in r.get("validation_errors", []):
+            all_errors.append(f"@{r['username']}: {err}")
+    
+    if all_errors:
+        print(f"\n{'='*60}")
+        print("❌ VALIDATION FAILURES")
+        print("="*60)
+        for err in all_errors:
+            print(f"  {err}")
+        print(f"\nFixtures saved to: tests/fixtures/")
+        sys.exit(1)
+    else:
+        print(f"\n✅ All validation checks passed!")
+        print(f"\nFixtures saved to: tests/fixtures/")
 
 
 if __name__ == "__main__":

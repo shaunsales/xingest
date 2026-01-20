@@ -11,14 +11,14 @@
     "following_count": 736,
     "total_posts_count": 0,
     "is_verified": true,
-    "scraped_at": "2026-01-20T13:41:29.793379"
+    "scraped_at": "2026-01-20T13:50:55.136547"
   },
   "tweets": [
     {
       "tweet_id": "1995827194640138476",
       "text": "We’re building in publicCheck out our NEW platform demo, delivering upgraded features from the moment you enter. This version gives you a faster, clearer, more responsive interface designed to help you act on real conviction, not delayed noise.\n\nFeaturing:Real time",
-      "created_at": null,
-      "is_pinned": false,
+      "created_at": "2025-12-02T12:07:38Z",
+      "is_pinned": true,
       "reply_count": 277,
       "repost_count": 319,
       "like_count": 1318,
@@ -29,11 +29,11 @@
     {
       "tweet_id": "2013213497945903285",
       "text": "We’re shipping updates continuously.What’s new:A cleaner, faster homepage experienceDynamic content for better discoverySmoother wallet connections with improved error handlingBetter access and usability for non-logged-in users\n\nWe move fast, iterate in real",
-      "created_at": null,
+      "created_at": "2026-01-19T11:34:36Z",
       "is_pinned": false,
       "reply_count": 35,
       "repost_count": 43,
-      "like_count": 294,
+      "like_count": 296,
       "view_count": 11000,
       "media_urls": null,
       "tweet_url": "https://x.com/nodepay/status/2013213497945903285"
@@ -41,7 +41,7 @@
     {
       "tweet_id": "2012900504704086220",
       "text": "Real users, sharing real Signals! \n\nContribute and share today at:http://beta.nodepay.ai",
-      "created_at": null,
+      "created_at": "2026-01-18T14:50:52Z",
       "is_pinned": false,
       "reply_count": 41,
       "repost_count": 34,
@@ -53,7 +53,7 @@
     {
       "tweet_id": "2012161602976420217",
       "text": "It's Friday, stay blessed!",
-      "created_at": null,
+      "created_at": "2026-01-16T13:54:44Z",
       "is_pinned": false,
       "reply_count": 45,
       "repost_count": 33,
@@ -65,7 +65,7 @@
     {
       "tweet_id": "2011774632798667166",
       "text": "This is a great example of signals in the wild.\n\nCashtag search activity reflects attention and intent before market action.\n\nAt Nodepay, we focus on collecting, ranking, and validating these Signals.",
-      "created_at": null,
+      "created_at": "2026-01-15T12:17:04Z",
       "is_pinned": false,
       "reply_count": 28,
       "repost_count": 44,
@@ -79,7 +79,7 @@
     {
       "tweet_id": "2011471724315828451",
       "text": "Update: Bug Fixes & Improvements Are Live\n\nWe’ve rolled out a new update addressing several issues reported by the community:V1 → V2 account linking\nImproved UI + clearer error messages for users linking accounts or updating emails without V1 history.UI & styling fixes",
-      "created_at": null,
+      "created_at": "2026-01-14T16:13:25Z",
       "is_pinned": false,
       "reply_count": 67,
       "repost_count": 43,
@@ -91,7 +91,7 @@
     {
       "tweet_id": "2011354348333514956",
       "text": "data makes us blush",
-      "created_at": null,
+      "created_at": "2026-01-14T08:27:00Z",
       "is_pinned": false,
       "reply_count": 46,
       "repost_count": 27,
@@ -103,7 +103,7 @@
     {
       "tweet_id": "2011047524530860054",
       "text": "Tune in folks!",
-      "created_at": null,
+      "created_at": "2026-01-13T12:07:47Z",
       "is_pinned": false,
       "reply_count": 29,
       "repost_count": 21,
@@ -115,7 +115,7 @@
     {
       "tweet_id": "2010995264010481758",
       "text": "Quick reminder\n\nToday we'll be doing an AMA at 12PM UTC\n\n→ Get your questions ready!",
-      "created_at": null,
+      "created_at": "2026-01-13T08:40:08Z",
       "is_pinned": false,
       "reply_count": 34,
       "repost_count": 58,
@@ -129,7 +129,7 @@
     {
       "tweet_id": "2010674688012280084",
       "text": "Signals (noun, tech slang)\n\n/ˈsɪɡ-nəlz/\n\n\"Actionable Intelligence Vector\"\n\nA structured stream of high-signal data, refined by AI and markets, designed to surface early insights, predict outcomes, and guide smarter decisions in real time.",
-      "created_at": null,
+      "created_at": "2026-01-12T11:26:16Z",
       "is_pinned": false,
       "reply_count": 46,
       "repost_count": 37,
@@ -142,6 +142,6 @@
   "cached": false,
   "cache_age_seconds": null,
   "error_message": null,
-  "scraped_at": "2026-01-20T13:41:29.793491",
-  "duration_ms": 4486.4220000000005
+  "scraped_at": "2026-01-20T13:50:55.136698",
+  "duration_ms": 5887.357
 }
