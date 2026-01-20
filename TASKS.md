@@ -5,10 +5,10 @@
 - [x] `exceptions.py` - Exception hierarchy
 - [x] `models/` - All Pydantic models (ProfileData, TweetData, ScrapeResult)
 
-## Phase 2: Core Scraping (Validate Early)
-- [ ] `core/fetcher.py` - Playwright automation (minimal, get HTML)
-- [ ] `core/parser.py` - BeautifulSoup extraction (profile + tweets)
-- [ ] `core/transformer.py` - Data normalization (counts, dates)
+## Phase 2: Core Scraping (Validate Early) ✅
+- [x] `core/fetcher.py` - Playwright automation (minimal, get HTML)
+- [x] `core/parser.py` - BeautifulSoup extraction (profile + tweets)
+- [x] `core/transformer.py` - Data normalization (counts, dates)
 
 ## Phase 3: Live Validation Checkpoint
 - [ ] Scrape 3-4 live X/Twitter accounts (e.g., @elonmusk, @openai, @anthropic, @github)
