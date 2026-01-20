@@ -20,12 +20,12 @@
 - **Unit tests** (`pytest tests/test_parser.py`) — Parse cached HTML fixtures, no internet, run frequently
 - **Integration tests** (`python tests/test_integration_scrape.py`) — Live scraping, requires internet, run sparingly
 
-## Phase 4: Infrastructure
-- [ ] `config.py` - Configuration management
-- [ ] `logging/setup.py` - Structlog configuration
-- [ ] `cache/base.py` - Cache interface
-- [ ] `cache/sqlite_cache.py` - SQLite implementation
-- [ ] `proxy/rotating.py` - Proxy rotation
+## Phase 4: Infrastructure ✅
+- [x] `config.py` - Configuration management (Pydantic Settings, env vars)
+- [x] `logging/setup.py` - Structlog configuration (JSON/console output)
+- [x] `cache/base.py` - Cache interface (abstract base class)
+- [x] `cache/sqlite_cache.py` - SQLite implementation (async, TTL support)
+- [x] `proxy/rotating.py` - Proxy rotation (round-robin/random)
 
 ## Phase 5: Orchestration
 - [ ] `core/orchestrator.py` - Pipeline coordinator
