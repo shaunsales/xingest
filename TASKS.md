@@ -50,4 +50,4 @@
 - [ ] Metrics export (Prometheus)
 - [x] Docker image + FastAPI web server (Swagger UI at /docs)
 - [ ] Tweet thread expansion
-- [ ] Reply/quote tweet detection
+- [x] Reply/quote/retweet detection (is_reply, is_quote_tweet, is_retweet fields)

@@ -142,3 +142,75 @@ class TestTransformerWithFixtures:
         for tweet in scrape_result.tweets:
             assert tweet.created_at is not None, \
                 f"Tweet {tweet.tweet_id} has null created_at after transform"
+
+
+class TestTweetTypeDetection:
+    """Test reply/quote/retweet detection in tweets."""
+
+    @pytest.mark.parametrize("username", EXPECTED_DATA.keys())
+    def test_tweets_have_type_fields(self, username: str):
+        """All tweets should have type indicator fields."""
+        html = get_fixture_html(username)
+        parse_result = parse_page(html, username)
+        scrape_result = transform_result(parse_result, username)
+        
+        for tweet in scrape_result.tweets:
+            # These fields should exist (even if False/None)
+            assert hasattr(tweet, "is_reply")
+            assert hasattr(tweet, "reply_to_username")
+            assert hasattr(tweet, "is_quote_tweet")
+            assert hasattr(tweet, "quoted_tweet_id")
+            assert hasattr(tweet, "is_retweet")
+            assert hasattr(tweet, "retweeted_from")
+
+    @pytest.mark.parametrize("username", EXPECTED_DATA.keys())
+    def test_type_fields_are_correct_types(self, username: str):
+        """Type indicator fields should have correct types."""
+        html = get_fixture_html(username)
+        parse_result = parse_page(html, username)
+        scrape_result = transform_result(parse_result, username)
+        
+        for tweet in scrape_result.tweets:
+            assert isinstance(tweet.is_reply, bool)
+            assert isinstance(tweet.is_quote_tweet, bool)
+            assert isinstance(tweet.is_retweet, bool)
+            # Optional string fields
+            assert tweet.reply_to_username is None or isinstance(tweet.reply_to_username, str)
+            assert tweet.quoted_tweet_id is None or isinstance(tweet.quoted_tweet_id, str)
+            assert tweet.retweeted_from is None or isinstance(tweet.retweeted_from, str)
+
+    @pytest.mark.parametrize("username", EXPECTED_DATA.keys())
+    def test_reply_has_username(self, username: str):
+        """If is_reply is True, reply_to_username should be set."""
+        html = get_fixture_html(username)
+        parse_result = parse_page(html, username)
+        scrape_result = transform_result(parse_result, username)
+        
+        for tweet in scrape_result.tweets:
+            if tweet.is_reply:
+                assert tweet.reply_to_username is not None, \
+                    f"Tweet {tweet.tweet_id} is_reply=True but reply_to_username is None"
+
+    @pytest.mark.parametrize("username", EXPECTED_DATA.keys())
+    def test_quote_has_tweet_id(self, username: str):
+        """If is_quote_tweet is True, quoted_tweet_id should be set."""
+        html = get_fixture_html(username)
+        parse_result = parse_page(html, username)
+        scrape_result = transform_result(parse_result, username)
+        
+        for tweet in scrape_result.tweets:
+            if tweet.is_quote_tweet:
+                assert tweet.quoted_tweet_id is not None, \
+                    f"Tweet {tweet.tweet_id} is_quote_tweet=True but quoted_tweet_id is None"
+
+    @pytest.mark.parametrize("username", EXPECTED_DATA.keys())
+    def test_retweet_has_username(self, username: str):
+        """If is_retweet is True, retweeted_from should be set."""
+        html = get_fixture_html(username)
+        parse_result = parse_page(html, username)
+        scrape_result = transform_result(parse_result, username)
+        
+        for tweet in scrape_result.tweets:
+            if tweet.is_retweet:
+                assert tweet.retweeted_from is not None, \
+                    f"Tweet {tweet.tweet_id} is_retweet=True but retweeted_from is None"

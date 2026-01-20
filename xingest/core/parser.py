@@ -207,11 +207,127 @@ def parse_tweets(soup: BeautifulSoup, username: str | None = None) -> list[dict]
         if media_urls:
             tweet["media_urls"] = media_urls
 
+        # Detect reply - look for "Replying to @username" text
+        reply_info = _detect_reply(tweet_el)
+        if reply_info:
+            tweet["is_reply"] = True
+            tweet["reply_to_username"] = reply_info
+
+        # Detect retweet - look for "@username retweeted" indicator
+        retweet_info = _detect_retweet(tweet_el)
+        if retweet_info:
+            tweet["is_retweet"] = True
+            tweet["retweeted_from"] = retweet_info
+
+        # Detect quote tweet - look for embedded quoted tweet
+        quote_info = _detect_quote_tweet(tweet_el)
+        if quote_info:
+            tweet["is_quote_tweet"] = True
+            tweet["quoted_tweet_id"] = quote_info
+
         # Only add tweet if we have an ID
         if tweet.get("tweet_id"):
             tweets.append(tweet)
 
     return tweets
+
+
+def _detect_reply(tweet_el) -> str | None:
+    """
+    Detect if tweet is a reply and extract the username being replied to.
+    
+    Returns:
+        Username being replied to (without @), or None if not a reply
+    """
+    # Look for "Replying to" text pattern
+    reply_indicators = tweet_el.find_all(string=lambda t: t and "Replying to" in t)
+    for indicator in reply_indicators:
+        # Find nearby @username links
+        parent = indicator.parent
+        if parent:
+            # Look for links with @username pattern
+            links = parent.find_all("a", href=lambda h: h and h.startswith("/"))
+            for link in links:
+                text = link.get_text(strip=True)
+                if text.startswith("@"):
+                    return text[1:]  # Remove @ prefix
+    
+    # Alternative: check for data-testid="reply" indicator at tweet level
+    # Some replies have a specific structure
+    reply_context = tweet_el.select_one('[data-testid="socialContext"]')
+    if reply_context:
+        text = reply_context.get_text(strip=True)
+        if "Replying to" in text:
+            # Extract @username from the text
+            import re
+            match = re.search(r"@(\w+)", text)
+            if match:
+                return match.group(1)
+    
+    return None
+
+
+def _detect_retweet(tweet_el) -> str | None:
+    """
+    Detect if tweet is a retweet and extract original author.
+    
+    Returns:
+        Original author username (without @), or None if not a retweet
+    """
+    # Retweets typically have a "username retweeted" indicator above the tweet
+    social_context = tweet_el.select_one('[data-testid="socialContext"]')
+    if social_context:
+        text = social_context.get_text(strip=True)
+        if "retweeted" in text.lower():
+            # The retweeting user is shown, but we want to find who originally posted
+            # Look for the tweet author which differs from profile
+            user_links = tweet_el.select('a[href^="/"][role="link"]')
+            for link in user_links:
+                href = link.get("href", "")
+                # Skip non-user links
+                if "/status/" in href or href.count("/") > 1:
+                    continue
+                if href.startswith("/"):
+                    return href[1:]  # Return username without leading /
+    
+    return None
+
+
+def _detect_quote_tweet(tweet_el) -> str | None:
+    """
+    Detect if tweet contains a quoted tweet and extract the quoted tweet ID.
+    
+    Returns:
+        Quoted tweet ID, or None if not a quote tweet
+    """
+    # Quote tweets have an embedded tweet card with its own status link
+    # Look for nested tweet structures or quote tweet containers
+    
+    # Method 1: Look for quoteTweet test id
+    quote_container = tweet_el.select_one('[data-testid="quoteTweet"]')
+    if quote_container:
+        # Find the status link within the quote
+        quote_links = quote_container.select('a[href*="/status/"]')
+        for link in quote_links:
+            href = link.get("href", "")
+            if "/status/" in href:
+                tweet_id = href.split("/status/")[1].split("/")[0].split("?")[0]
+                if tweet_id.isdigit():
+                    return tweet_id
+    
+    # Method 2: Look for card with embedded tweet structure
+    # Quote tweets often have a nested article or blockquote-like element
+    cards = tweet_el.select('[data-testid="card.wrapper"]')
+    for card in cards:
+        card_links = card.select('a[href*="/status/"]')
+        for link in card_links:
+            href = link.get("href", "")
+            if "/status/" in href:
+                tweet_id = href.split("/status/")[1].split("/")[0].split("?")[0]
+                if tweet_id.isdigit():
+                    return tweet_id
+    
+    return None
 
 
 def _extract_metric(element) -> str:

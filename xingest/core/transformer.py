@@ -191,6 +191,14 @@ def transform_tweets(raw_tweets: list[dict], username: str) -> list[TweetData]:
             text=raw.get("text", ""),
             created_at=parse_tweet_date(raw.get("created_at_raw")),
             is_pinned=raw.get("is_pinned", False),
+            # Tweet type indicators
+            is_reply=raw.get("is_reply", False),
+            reply_to_username=raw.get("reply_to_username"),
+            is_quote_tweet=raw.get("is_quote_tweet", False),
+            quoted_tweet_id=raw.get("quoted_tweet_id"),
+            is_retweet=raw.get("is_retweet", False),
+            retweeted_from=raw.get("retweeted_from"),
+            # Engagement metrics
             reply_count=normalize_count(raw.get("reply_count_raw")),
             repost_count=normalize_count(raw.get("repost_count_raw")),
             like_count=normalize_count(raw.get("like_count_raw")),
