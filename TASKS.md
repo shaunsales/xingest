@@ -44,7 +44,7 @@
 ## Future Enhancements
 - [ ] Scroll to load more tweets (configurable depth)
 - [ ] Media download (images, videos)
-- [ ] DataFrame/Pandas output option
+- [x] DataFrame/Pandas output option (to_tweets_df, to_profile_df, save_csv)
 - [ ] Webhook notifications on scrape complete
 - [ ] Scheduled scraping (cron-like)
 - [ ] Metrics export (Prometheus)

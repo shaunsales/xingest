@@ -5,7 +5,17 @@ from xingest.models.tweet import TweetData
 from xingest.models.result import ScrapeResult
 from xingest.config import ScraperConfig
 from xingest.core.orchestrator import Scraper
-from xingest.core.exporter import to_json, to_dict, save_json, load_json
+from xingest.core.exporter import (
+    to_json,
+    to_dict,
+    save_json,
+    load_json,
+    to_tweets_df,
+    to_profile_df,
+    results_to_tweets_df,
+    results_to_profiles_df,
+    save_csv,
+)
 
 __version__ = "0.1.0"
 
@@ -22,5 +32,11 @@ __all__ = [
     "to_dict",
     "save_json",
     "load_json",
+    # DataFrame utilities
+    "to_tweets_df",
+    "to_profile_df",
+    "results_to_tweets_df",
+    "results_to_profiles_df",
+    "save_csv",
     "__version__",
 ]

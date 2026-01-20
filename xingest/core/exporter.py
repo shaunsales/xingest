@@ -3,8 +3,18 @@
 import json
 from pathlib import Path
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from xingest.models.result import ScrapeResult
+
+if TYPE_CHECKING:
+    import pandas as pd
+
+try:
+    import pandas as pd
+    PANDAS_AVAILABLE = True
+except ImportError:
+    PANDAS_AVAILABLE = False
 
 
 def to_json(result: ScrapeResult, indent: int = 2) -> str:
@@ -129,3 +139,139 @@ def merge_results(results: list[ScrapeResult]) -> dict:
         "profiles": profiles,
         "tweets": tweets,
     }
+
+
+def _check_pandas():
+    """Raise ImportError if pandas is not available."""
+    if not PANDAS_AVAILABLE:
+        raise ImportError(
+            "pandas is required for DataFrame export. Install with: pip install pandas"
+        )
+
+
+def to_tweets_df(result: ScrapeResult) -> "pd.DataFrame":
+    """
+    Convert tweets from a ScrapeResult to a pandas DataFrame.
+
+    Args:
+        result: ScrapeResult containing tweets
+
+    Returns:
+        DataFrame with one row per tweet
+
+    Raises:
+        ImportError: If pandas is not installed
+    """
+    _check_pandas()
+
+    rows = []
+    for tweet in result.tweets:
+        row = tweet.model_dump(mode="json")
+        if result.profile:
+            row["username"] = result.profile.username
+        rows.append(row)
+
+    return pd.DataFrame(rows)
+
+
+def to_profile_df(result: ScrapeResult) -> "pd.DataFrame":
+    """
+    Convert profile from a ScrapeResult to a pandas DataFrame.
+
+    Args:
+        result: ScrapeResult containing profile
+
+    Returns:
+        DataFrame with one row for the profile
+
+    Raises:
+        ImportError: If pandas is not installed
+    """
+    _check_pandas()
+
+    if result.profile:
+        row = result.profile.model_dump(mode="json")
+        return pd.DataFrame([row])
+    return pd.DataFrame()
+
+
+def results_to_tweets_df(results: list[ScrapeResult]) -> "pd.DataFrame":
+    """
+    Convert tweets from multiple ScrapeResults to a single DataFrame.
+
+    Args:
+        results: List of ScrapeResults
+
+    Returns:
+        DataFrame with all tweets, includes 'username' column
+
+    Raises:
+        ImportError: If pandas is not installed
+    """
+    _check_pandas()
+
+    rows = []
+    for result in results:
+        for tweet in result.tweets:
+            row = tweet.model_dump(mode="json")
+            if result.profile:
+                row["username"] = result.profile.username
+            rows.append(row)
+
+    return pd.DataFrame(rows)
+
+
+def results_to_profiles_df(results: list[ScrapeResult]) -> "pd.DataFrame":
+    """
+    Convert profiles from multiple ScrapeResults to a single DataFrame.
+
+    Args:
+        results: List of ScrapeResults
+
+    Returns:
+        DataFrame with one row per profile
+
+    Raises:
+        ImportError: If pandas is not installed
+    """
+    _check_pandas()
+
+    rows = []
+    for result in results:
+        if result.profile:
+            rows.append(result.profile.model_dump(mode="json"))
+
+    return pd.DataFrame(rows)
+
+
+def save_csv(
+    result: ScrapeResult,
+    filepath: str | Path,
+    tweets: bool = True,
+) -> Path:
+    """
+    Save ScrapeResult to CSV file.
+
+    Args:
+        result: ScrapeResult to save
+        filepath: Output file path
+        tweets: If True, save tweets; if False, save profile
+
+    Returns:
+        Path to saved file
+
+    Raises:
+        ImportError: If pandas is not installed
+    """
+    _check_pandas()
+
+    path = Path(filepath)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    if tweets:
+        df = to_tweets_df(result)
+    else:
+        df = to_profile_df(result)
+
+    df.to_csv(path, index=False)
+    return path
