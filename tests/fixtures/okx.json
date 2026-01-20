@@ -1,0 +1,101 @@
+{
+  "success": true,
+  "username": "okx",
+  "profile": {
+    "username": "okx",
+    "display_name": "OKX",
+    "bio": "A new alternative for your crypto journey | Self-custody & dApps:@Wallet| Support:@OKXHelpDesk| UK users:@OKX_UK",
+    "website_url": null,
+    "joined_date": "2017-05-01T00:00:00",
+    "followers_count": 5600000,
+    "following_count": 326,
+    "total_posts_count": 0,
+    "is_verified": true,
+    "scraped_at": "2026-01-20T13:41:23.236835"
+  },
+  "tweets": [
+    {
+      "tweet_id": "2012952460877607151",
+      "text": "Five straight wins at the highest level. \nThat’s why OKX backs the halfpipe standard: Scotty James.",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 104,
+      "repost_count": 81,
+      "like_count": 716,
+      "view_count": 1400000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/okx/status/2012952460877607151"
+    },
+    {
+      "tweet_id": "2013469559152431502",
+      "text": "Holding the New Money App with my",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 57,
+      "repost_count": 9,
+      "like_count": 70,
+      "view_count": 8300,
+      "media_urls": [
+        "https://pbs.twimg.com/media/G_FH4JsXIAAThQY?format=jpg&name=small"
+      ],
+      "tweet_url": "https://x.com/okx/status/2013469559152431502"
+    },
+    {
+      "tweet_id": "2013422753613762627",
+      "text": "Today, NYSE announced plans for:\n• 24/7 markets\n• Instant settlement\n• Tokenized securities\n\nBlockchain — not as an experiment, but as infrastructure.\n\nWelcome to The Mild Mild West:\ncrypto’s safer, regulated, built-to-last era.",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 69,
+      "repost_count": 29,
+      "like_count": 138,
+      "view_count": 13000,
+      "media_urls": [
+        "https://pbs.twimg.com/media/G_EdUt5WwAAk_Ar?format=jpg&name=small"
+      ],
+      "tweet_url": "https://x.com/okx/status/2013422753613762627"
+    },
+    {
+      "tweet_id": "2013378711286858222",
+      "text": "Big goal for the year ...",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 125,
+      "repost_count": 25,
+      "like_count": 188,
+      "view_count": 19000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/okx/status/2013378711286858222"
+    },
+    {
+      "tweet_id": "2013333412644294788",
+      "text": "$DOOD-coded",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 123,
+      "repost_count": 33,
+      "like_count": 242,
+      "view_count": 25000,
+      "media_urls": [
+        "https://pbs.twimg.com/media/G_DMDZBXMAAfQwy?format=jpg&name=small"
+      ],
+      "tweet_url": "https://x.com/okx/status/2013333412644294788"
+    },
+    {
+      "tweet_id": "2013298867521917306",
+      "text": "Today is a Bank Holiday, not a Crypto Holiday. \n\nWhile traditional apps work, their settlement is delayed due to holidays. \n\nMove on to new money and modern finance where bank holidays don't hold you back.",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 103,
+      "repost_count": 49,
+      "like_count": 254,
+      "view_count": 48000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/okx/status/2013298867521917306"
+    }
+  ],
+  "cached": false,
+  "cache_age_seconds": null,
+  "error_message": null,
+  "scraped_at": "2026-01-20T13:41:23.237398",
+  "duration_ms": 6475.073
+}

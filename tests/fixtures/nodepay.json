@@ -1,0 +1,147 @@
+{
+  "success": true,
+  "username": "nodepay",
+  "profile": {
+    "username": "nodepay",
+    "display_name": "Nodepay",
+    "bio": "Real-time predictive intelligence",
+    "website_url": null,
+    "joined_date": "2024-02-01T00:00:00",
+    "followers_count": 1200000,
+    "following_count": 736,
+    "total_posts_count": 0,
+    "is_verified": true,
+    "scraped_at": "2026-01-20T13:41:29.793379"
+  },
+  "tweets": [
+    {
+      "tweet_id": "1995827194640138476",
+      "text": "We’re building in publicCheck out our NEW platform demo, delivering upgraded features from the moment you enter. This version gives you a faster, clearer, more responsive interface designed to help you act on real conviction, not delayed noise.\n\nFeaturing:Real time",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 277,
+      "repost_count": 319,
+      "like_count": 1318,
+      "view_count": 113000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nodepay/status/1995827194640138476"
+    },
+    {
+      "tweet_id": "2013213497945903285",
+      "text": "We’re shipping updates continuously.What’s new:A cleaner, faster homepage experienceDynamic content for better discoverySmoother wallet connections with improved error handlingBetter access and usability for non-logged-in users\n\nWe move fast, iterate in real",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 35,
+      "repost_count": 43,
+      "like_count": 294,
+      "view_count": 11000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nodepay/status/2013213497945903285"
+    },
+    {
+      "tweet_id": "2012900504704086220",
+      "text": "Real users, sharing real Signals! \n\nContribute and share today at:http://beta.nodepay.ai",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 41,
+      "repost_count": 34,
+      "like_count": 232,
+      "view_count": 14000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nodepay/status/2012900504704086220"
+    },
+    {
+      "tweet_id": "2012161602976420217",
+      "text": "It's Friday, stay blessed!",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 45,
+      "repost_count": 33,
+      "like_count": 286,
+      "view_count": 13000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nodepay/status/2012161602976420217"
+    },
+    {
+      "tweet_id": "2011774632798667166",
+      "text": "This is a great example of signals in the wild.\n\nCashtag search activity reflects attention and intent before market action.\n\nAt Nodepay, we focus on collecting, ranking, and validating these Signals.",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 28,
+      "repost_count": 44,
+      "like_count": 281,
+      "view_count": 14000,
+      "media_urls": [
+        "https://pbs.twimg.com/media/G-r4O69bQAEABHx?format=jpg&name=small"
+      ],
+      "tweet_url": "https://x.com/nodepay/status/2011774632798667166"
+    },
+    {
+      "tweet_id": "2011471724315828451",
+      "text": "Update: Bug Fixes & Improvements Are Live\n\nWe’ve rolled out a new update addressing several issues reported by the community:V1 → V2 account linking\nImproved UI + clearer error messages for users linking accounts or updating emails without V1 history.UI & styling fixes",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 67,
+      "repost_count": 43,
+      "like_count": 312,
+      "view_count": 19000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nodepay/status/2011471724315828451"
+    },
+    {
+      "tweet_id": "2011354348333514956",
+      "text": "data makes us blush",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 46,
+      "repost_count": 27,
+      "like_count": 274,
+      "view_count": 13000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nodepay/status/2011354348333514956"
+    },
+    {
+      "tweet_id": "2011047524530860054",
+      "text": "Tune in folks!",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 29,
+      "repost_count": 21,
+      "like_count": 188,
+      "view_count": 12000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nodepay/status/2011047524530860054"
+    },
+    {
+      "tweet_id": "2010995264010481758",
+      "text": "Quick reminder\n\nToday we'll be doing an AMA at 12PM UTC\n\n→ Get your questions ready!",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 34,
+      "repost_count": 58,
+      "like_count": 340,
+      "view_count": 16000,
+      "media_urls": [
+        "https://pbs.twimg.com/media/G-YfssRXsAEGDdG?format=jpg&name=small"
+      ],
+      "tweet_url": "https://x.com/nodepay/status/2010995264010481758"
+    },
+    {
+      "tweet_id": "2010674688012280084",
+      "text": "Signals (noun, tech slang)\n\n/ˈsɪɡ-nəlz/\n\n\"Actionable Intelligence Vector\"\n\nA structured stream of high-signal data, refined by AI and markets, designed to surface early insights, predict outcomes, and guide smarter decisions in real time.",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 46,
+      "repost_count": 37,
+      "like_count": 269,
+      "view_count": 14000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nodepay/status/2010674688012280084"
+    }
+  ],
+  "cached": false,
+  "cache_age_seconds": null,
+  "error_message": null,
+  "scraped_at": "2026-01-20T13:41:29.793491",
+  "duration_ms": 4486.4220000000005
+}

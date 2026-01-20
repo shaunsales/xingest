@@ -10,11 +10,11 @@
 - [x] `core/parser.py` - BeautifulSoup extraction (profile + tweets)
 - [x] `core/transformer.py` - Data normalization (counts, dates)
 
-## Phase 3: Live Validation Checkpoint
-- [ ] Scrape 3-4 live X/Twitter accounts (e.g., @elonmusk, @openai, @anthropic, @github)
-- [ ] Verify parsed data matches expected structure
-- [ ] Save raw HTML to `tests/fixtures/` for integration tests
-- [ ] Document any selector issues or edge cases found
+## Phase 3: Live Validation Checkpoint ✅
+- [x] Scrape 5 live X/Twitter accounts (@okx, @nodepay, @jason, @cz_binance, @nikitabier)
+- [x] Verify parsed data matches expected structure
+- [x] Save raw HTML to `tests/fixtures/` for integration tests
+- [x] Selectors working - no issues found
 
 ## Phase 4: Infrastructure
 - [ ] `config.py` - Configuration management

@@ -1,0 +1,137 @@
+{
+  "success": true,
+  "username": "nikitabier",
+  "profile": {
+    "username": "nikitabier",
+    "display_name": "Nikita Bier",
+    "bio": "head of product@x, advisor@solana, venture partner@lightspeedvp, ex-founder@gasappteam(acq by discord), ex-founder@thetbhapp(acq by facebook)",
+    "website_url": null,
+    "joined_date": "2012-07-01T00:00:00",
+    "followers_count": 778500,
+    "following_count": 2015,
+    "total_posts_count": 0,
+    "is_verified": true,
+    "scraped_at": "2026-01-20T13:41:51.321735"
+  },
+  "tweets": [
+    {
+      "tweet_id": "1948200627647164885",
+      "text": "Current state of the medical establishment:\n\nBrought a friend to the ER for a high fever.\n\nPut their symptoms into Grok.\n\nGrok told me to ask for 4 tests.\n\nDoctor said 1 of them is unnecessary.\n\nI insisted we do them all.\n\nTest came back positive on the one he didn’t want to do.",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 2215,
+      "repost_count": 6876,
+      "like_count": 97659,
+      "view_count": 8300000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nikitabier/status/1948200627647164885"
+    },
+    {
+      "tweet_id": "1856523236655161373",
+      "text": "Elon watching federal employees enter the private sector",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 875,
+      "repost_count": 8047,
+      "like_count": 69265,
+      "view_count": 5500000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nikitabier/status/1856523236655161373"
+    },
+    {
+      "tweet_id": "1774443199412556072",
+      "text": "Happy Easter",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 172,
+      "repost_count": 1540,
+      "like_count": 61179,
+      "view_count": 3500000,
+      "media_urls": [
+        "https://pbs.twimg.com/media/GKAWr4CWoAEu3gF?format=jpg&name=small"
+      ],
+      "tweet_url": "https://x.com/nikitabier/status/1774443199412556072"
+    },
+    {
+      "tweet_id": "1896930506362470564",
+      "text": "Bro the tariffs are good. Yes it will make inflation worse. Yes that means the fed won’t lower rates. Yes that means interest payments on our debt will balloon.\n\nBut once Bill Cletus in Oklahoma learns how to build GPUs and we discover rare earth metals in America, the economy is",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 701,
+      "repost_count": 2858,
+      "like_count": 50695,
+      "view_count": 3500000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nikitabier/status/1896930506362470564"
+    },
+    {
+      "tweet_id": "1895677779469037970",
+      "text": "You cannot spin this. If Russia is cheering us on, we have lost the plot.https://x.com/MedvedevRussia/MedvedevRussiaE/status/1895549112440979908…",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 46,
+      "repost_count": 3229,
+      "like_count": 50171,
+      "view_count": 1700000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nikitabier/status/1895677779469037970"
+    },
+    {
+      "tweet_id": "1840979403909533862",
+      "text": "I miss when this was our biggest crisis",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 147,
+      "repost_count": 2821,
+      "like_count": 47284,
+      "view_count": 1300000,
+      "media_urls": [
+        "https://pbs.twimg.com/media/GYx5AltXEAU1ff8?format=jpg&name=small"
+      ],
+      "tweet_url": "https://x.com/nikitabier/status/1840979403909533862"
+    },
+    {
+      "tweet_id": "1880297548398883113",
+      "text": "The fact TikTok didn’t sell, despite having many willing buyers, is a testament that it was an agent of the CCP.",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 1818,
+      "repost_count": 3334,
+      "like_count": 45837,
+      "view_count": 4099999,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nikitabier/status/1880297548398883113"
+    },
+    {
+      "tweet_id": "1977446408136650785",
+      "text": "This week we purged 1.7 million bots engaging in reply spam. You should start noticing improvements in the coming days. We will be focusing on DM spam next.",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 5137,
+      "repost_count": 3465,
+      "like_count": 41312,
+      "view_count": 5000000,
+      "media_urls": null,
+      "tweet_url": "https://x.com/nikitabier/status/1977446408136650785"
+    },
+    {
+      "tweet_id": "1939723101723574703",
+      "text": "Ladies and gentlemen, I've officially posted my way to the top:\n\nI'm joining@Xas Head of Product.\n\n𝕏 is the most important social network in the world. It's where internet culture originates and where the world's most influential people convene.\n\nFinding my community and",
+      "created_at": null,
+      "is_pinned": false,
+      "reply_count": 5017,
+      "repost_count": 2837,
+      "like_count": 38150,
+      "view_count": 28000000,
+      "media_urls": [
+        "https://pbs.twimg.com/media/GutEJAxa8AEKOvX?format=jpg&name=small"
+      ],
+      "tweet_url": "https://x.com/nikitabier/status/1939723101723574703"
+    }
+  ],
+  "cached": false,
+  "cache_age_seconds": null,
+  "error_message": null,
+  "scraped_at": "2026-01-20T13:41:51.321874",
+  "duration_ms": 5096.538
+}
