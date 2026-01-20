@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  xingest:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - XINGEST_HEADLESS=true
+      - XINGEST_CACHE_BACKEND=sqlite
+      - XINGEST_CACHE_TTL_SECONDS=300
+      - XINGEST_LOG_LEVEL=INFO
+    volumes:
+      # Persist cache between restarts
+      - xingest-cache:/tmp
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Optional: Redis cache backend
+  # Uncomment to use Redis instead of SQLite
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis-data:/data
+
+volumes:
+  xingest-cache:
+  # redis-data:

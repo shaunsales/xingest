@@ -48,6 +48,6 @@
 - [ ] Webhook notifications on scrape complete
 - [ ] Scheduled scraping (cron-like)
 - [ ] Metrics export (Prometheus)
-- [ ] Docker image
+- [x] Docker image + FastAPI web server (Swagger UI at /docs)
 - [ ] Tweet thread expansion
 - [ ] Reply/quote tweet detection
