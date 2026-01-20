@@ -15,7 +15,7 @@ A Python library for scraping X/Twitter profile data using Playwright and Beauti
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/xingest.git
+git clone https://github.com/shaunsales/xingest.git
 cd xingest
 
 # Install dependencies

@@ -4,7 +4,7 @@
 
 ```bash
 # Clone and install in editable mode
-git clone https://github.com/yourusername/xingest.git
+git clone https://github.com/shaunsales/xingest.git
 cd xingest
 pip install -e ".[dev]"
 
