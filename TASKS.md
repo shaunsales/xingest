@@ -32,12 +32,12 @@
 - [x] `core/exporter.py` - JSON output (save/load/merge utilities)
 - [x] `__init__.py` - Public API (Scraper, config, models, exporters)
 
-## Phase 6: CLI & Polish
-- [ ] `cli.py` - Typer CLI
-- [ ] `cache/redis_cache.py` - Redis implementation
-- [ ] Unit tests (parser, transformer)
-- [ ] Integration tests (using cached fixtures)
-- [ ] Documentation (README.md)
+## Phase 6: CLI & Polish ✅
+- [x] `cli.py` - Typer CLI (scrape, info, cache commands)
+- [x] `cache/redis_cache.py` - Redis implementation (async, TTL support)
+- [x] Unit tests (97 tests covering parser, transformer, config, cache, proxy, orchestrator, exporter)
+- [x] Integration tests (live scraping with validation)
+- [x] Documentation (README.md, CONTRIBUTING.md, docs/ARCHITECTURE.md)
 
 ---
 
