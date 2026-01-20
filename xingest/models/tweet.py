@@ -1,0 +1,20 @@
+"""Tweet data model."""
+
+from datetime import datetime
+
+from pydantic import BaseModel, HttpUrl
+
+
+class TweetData(BaseModel):
+    """Represents a scraped tweet."""
+
+    tweet_id: str
+    text: str
+    created_at: datetime | None = None
+    is_pinned: bool = False
+    reply_count: int = 0
+    repost_count: int = 0
+    like_count: int = 0
+    view_count: int | None = None
+    media_urls: list[HttpUrl] | None = None
+    tweet_url: HttpUrl
