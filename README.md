@@ -104,10 +104,13 @@ ProfileData(
     username="elonmusk",
     display_name="Elon Musk",
     bio="...",
+    website_url="https://tesla.com",
     followers_count=150000000,
     following_count=500,
+    total_posts_count=25000,
     is_verified=True,
     joined_date=datetime(2009, 6, 1),
+    scraped_at=datetime(2026, 1, 20, 12, 0, 0),
 )
 ```
 
@@ -116,12 +119,22 @@ ProfileData(
 TweetData(
     tweet_id="1234567890",
     text="Hello, world!",
-    created_at=datetime(2024, 1, 15, 12, 0, 0),
+    created_at=datetime(2026, 1, 15, 12, 0, 0),
+    is_pinned=False,
+    # Tweet type indicators
+    is_reply=False,
+    reply_to_username=None,
+    is_quote_tweet=False,
+    quoted_tweet_id=None,
+    is_retweet=False,
+    retweeted_from=None,
+    # Engagement metrics
     like_count=1000,
     repost_count=100,
     reply_count=50,
     view_count=50000,
-    is_pinned=False,
+    media_urls=["https://pbs.twimg.com/media/..."],
+    tweet_url="https://x.com/elonmusk/status/1234567890",
 )
 ```
 
