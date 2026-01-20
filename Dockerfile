@@ -1,7 +1,7 @@
 # Multi-stage Dockerfile for xingest API
 # Includes Playwright with Chromium for headless scraping
 
-FROM python:3.12-slim AS base
+FROM python:3.12-slim
 
 # Install system dependencies for Playwright
 RUN apt-get update && apt-get install -y \
@@ -9,10 +9,8 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Playwright system dependencies
-RUN pip install playwright && playwright install-deps chromium
-
-FROM base AS builder
+# Create non-root user early
+RUN useradd -m -u 1000 scraper
 
 WORKDIR /app
 
@@ -20,19 +18,16 @@ WORKDIR /app
 COPY pyproject.toml .
 COPY xingest/ xingest/
 
-# Install dependencies
-RUN pip install --no-cache-dir . fastapi uvicorn[standard]
+# Install dependencies and Playwright
+RUN pip install --no-cache-dir . fastapi uvicorn[standard] playwright
 
-# Install Playwright browsers
-RUN playwright install chromium
+# Install Playwright system deps as root
+RUN playwright install-deps chromium
 
-FROM builder AS runtime
-
-WORKDIR /app
-
-# Create non-root user for security
-RUN useradd -m -u 1000 scraper
+# Switch to scraper user and install browsers in their home directory
 USER scraper
+ENV PLAYWRIGHT_BROWSERS_PATH=/home/scraper/.cache/ms-playwright
+RUN playwright install chromium
 
 # Environment variables
 ENV XINGEST_HEADLESS=true
