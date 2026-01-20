@@ -49,7 +49,7 @@ def parse_profile(soup: BeautifulSoup) -> dict:
     user_name_el = soup.select_one(SELECTORS["user_name"])
     if user_name_el:
         spans = user_name_el.find_all("span", recursive=True)
-        # Display name is usually in the first substantial span
+        # Display name is usually in the first substantial span (not starting with @)
         for span in spans:
             text = span.get_text(strip=True)
             if text and not text.startswith("@"):
@@ -61,6 +61,9 @@ def parse_profile(soup: BeautifulSoup) -> dict:
             if text.startswith("@"):
                 profile["username"] = text[1:]  # Remove @
                 break
+        # Fallback: if no display_name found, use username
+        if "username" in profile and "display_name" not in profile:
+            profile["display_name"] = profile["username"]
 
     # Bio/description
     bio_el = soup.select_one(SELECTORS["user_description"])

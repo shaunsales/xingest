@@ -16,6 +16,10 @@
 - [x] Save raw HTML to `tests/fixtures/` for integration tests
 - [x] Selectors working - no issues found
 
+### Test Structure
+- **Unit tests** (`pytest tests/test_parser.py`) — Parse cached HTML fixtures, no internet, run frequently
+- **Integration tests** (`python tests/test_integration_scrape.py`) — Live scraping, requires internet, run sparingly
+
 ## Phase 4: Infrastructure
 - [ ] `config.py` - Configuration management
 - [ ] `logging/setup.py` - Structlog configuration

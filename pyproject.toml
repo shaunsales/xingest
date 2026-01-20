@@ -43,3 +43,6 @@ strict = true
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+markers = [
+    "integration: marks tests as integration tests (require internet, run sparingly)",
+]

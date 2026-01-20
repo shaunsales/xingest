@@ -1,14 +1,25 @@
-"""Phase 3 validation script - test live scraping against real accounts."""
+"""
+Integration tests - live scraping against real X/Twitter accounts.
+
+These tests require internet and should be run sparingly to avoid rate limiting.
+
+Run with: pytest tests/test_integration_scrape.py -v
+Or standalone: python tests/test_integration_scrape.py
+"""
 
 import asyncio
-import json
 import sys
 from pathlib import Path
 from datetime import datetime
 
+import pytest
+
 from xingest.core.fetcher import fetch_profile_page
 from xingest.core.parser import parse_page
 from xingest.core.transformer import transform_result
+
+# Mark all tests in this module as integration tests (slow, requires internet)
+pytestmark = pytest.mark.integration
 
 # Test accounts - dict with username and expected pinned tweet ID (if known)
 TEST_ACCOUNTS = {
@@ -19,7 +30,7 @@ TEST_ACCOUNTS = {
     "nikitabier": {"pinned_tweet_id": None},
 }
 
-FIXTURES_DIR = Path(__file__).parent.parent / "tests" / "fixtures"
+FIXTURES_DIR = Path(__file__).parent / "fixtures"
 
 
 class ValidationError(Exception):
