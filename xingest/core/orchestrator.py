@@ -102,6 +102,7 @@ class Scraper:
             self._log.error("fetch_failed", username=username, error=fetch_result.error)
             return ScrapeResult(
                 success=False,
+                username=username,
                 profile=None,
                 tweets=[],
                 scraped_at=datetime.now(),
@@ -112,7 +113,7 @@ class Scraper:
         parse_result = parse_page(fetch_result.html, username)
         duration_ms = (datetime.now() - start).total_seconds() * 1000
         
-        result = transform_result(parse_result, username, duration_ms)
+        result = transform_result(parse_result, username, duration_ms=duration_ms)
         
         self._log.info(
             "scrape_complete",
