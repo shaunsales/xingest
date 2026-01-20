@@ -200,7 +200,20 @@ def transform_tweets(raw_tweets: list[dict], username: str) -> list[TweetData]:
         )
         tweets.append(tweet)
 
-    return tweets
+    # Sort by created_at descending (newest first), pinned tweets stay at top
+    tweets.sort(
+        key=lambda t: (
+            not t.is_pinned,  # Pinned tweets first (False < True)
+            t.created_at or datetime.min,  # Then by date
+        ),
+        reverse=False,  # We want pinned first, then newest
+    )
+    # Re-sort non-pinned by date descending
+    pinned = [t for t in tweets if t.is_pinned]
+    non_pinned = [t for t in tweets if not t.is_pinned]
+    non_pinned.sort(key=lambda t: t.created_at or datetime.min, reverse=True)
+    
+    return pinned + non_pinned
 
 
 def transform_result(
